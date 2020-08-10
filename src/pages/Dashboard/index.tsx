@@ -22,12 +22,18 @@ const Dashboard: React.FC = () => {
   const [minutes, setMinuts] = useState(0);
   const [comFM, setCFM] = useState(0);
   const [semFM, setSFM] = useState(0);
+  const [isAplan, setIsAplan] = useState(true);
 
   useEffect(
     useCallback(() => {
       let price = 0;
 
       price = getCallValue(origin, destine);
+      if (Number(price) === 10) {
+        setIsAplan(false);
+      } else {
+        setIsAplan(true);
+      }
       setSFM(Number(price) * Number(minutes));
 
       if (plan !== "Planos") {
@@ -73,10 +79,10 @@ const Dashboard: React.FC = () => {
         <DropDownn options={PlansList} setValue={setPlan} />
         <CardResultContainer>
           <Card cColor={"EB5E28"} cWidth={187} cHeight={48}>
-            <p>$ {comFM.toFixed(2)}</p>
+            {isAplan ? <p>${comFM.toFixed(2)}</p> : <p>-</p>}
           </Card>
           <Card cColor={"EB5E28"} cWidth={187} cHeight={48}>
-            <p>$ {semFM.toFixed(2)}</p>
+            {isAplan ? <p>${semFM.toFixed(2)}</p> : <p>-</p>}
           </Card>
         </CardResultContainer>
       </DropdownContainer>

@@ -13,7 +13,7 @@ export function getCallValue(origin: string, destine: string): number {
   } else if (origin === "018" && destine === "011") {
     price = 1.9;
   } else {
-    return 0;
+    return 10;
   }
 
   return price;
