@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import {
   Container,
@@ -23,29 +23,29 @@ const Dashboard: React.FC = () => {
   const [comFM, setCFM] = useState(0);
   const [semFM, setSFM] = useState(0);
 
-  console.log(origin, destine, plan, minutes);
+  useEffect(
+    useCallback(() => {
+      let price = 0;
 
-  useEffect(() => {
-    let price = 0;
+      price = getCallValue(origin, destine);
+      setSFM(Number(price) * Number(minutes));
 
-    price = getCallValue(origin, destine);
-    setSFM(Number(price) * Number(minutes));
+      if (plan !== "Planos") {
+        const planMinuts = getPlanMinuts(plan);
 
-    if (plan !== "Planos") {
-      const planMinuts = getPlanMinuts(plan);
+        if (Number(minutes) > Number(planMinuts)) {
+          const difference = Number(minutes) - Number(planMinuts);
 
-      if (Number(minutes) > Number(planMinuts)) {
-        const difference = Number(minutes) - Number(planMinuts);
+          const subTotal = difference * price;
+          const total = subTotal + subTotal * 0.1;
 
-        const subTotal = difference * price;
-        const total = subTotal + subTotal * 0.1;
-
-        setCFM(total);
-      } else {
-        setCFM(0);
+          setCFM(total);
+        } else {
+          setCFM(0);
+        }
       }
-    }
-  }, [origin, destine, plan, minutes]);
+    }, [origin, destine, plan, minutes])
+  );
 
   return (
     <Container>
