@@ -45,8 +45,6 @@ const Dashboard: React.FC = () => {
         setCFM(0);
       }
     }
-
-    console.log(price);
   }, [origin, destine, plan, minutes]);
 
   return (
